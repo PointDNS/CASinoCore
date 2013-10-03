@@ -7,7 +7,7 @@ namespace :casino_core do
     include CASinoCore::Helper::ServiceTickets
 
     desc 'Add a service rule (prefix the url parameter with "regex:" to add a regular expression)'
-    task :add, [:name, :url] => 'casino_core:db:configure_connection' do |task, args|
+    task :add, [:name, :url] => 'casino_core:db:configuration' do |task, args|
       service_rule = CASinoCore::Model::ServiceRule.new name: args[:name]
       match = /^regex:(.*)/.match(args[:url])
       if match.nil?
@@ -24,19 +24,19 @@ namespace :casino_core do
     end
 
     desc 'Remove a servcice rule.'
-    task :delete, [:id] => 'casino_core:db:configure_connection' do |task, args|
+    task :delete, [:id] => 'casino_core:db:configuration' do |task, args|
       CASinoCore::Model::ServiceRule.find(args[:id]).delete
       puts "Successfully deleted service rule ##{args[:id]}."
     end
 
     desc 'Delete all servcice rules.'
-    task :flush => 'casino_core:db:configure_connection' do |task, args|
+    task :flush => 'casino_core:db:configuration' do |task, args|
       CASinoCore::Model::ServiceRule.delete_all
       puts 'Successfully deleted all service rules.'
     end
 
     desc 'List all service rules.'
-    task list: 'casino_core:db:configure_connection' do
+    task list: 'casino_core:db:configuration' do
       table = Terminal::Table.new :headings => ['Enabled', 'ID', 'Name', 'URL'] do |t|
         CASinoCore::Model::ServiceRule.all.each do |service_rule|
           url = service_rule.url
