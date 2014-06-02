@@ -30,6 +30,18 @@ class CASinoCore::Processor::API::ServiceTicketProvider < CASinoCore::Processor
     handle_ticket_granting_ticket
   end
 
+  def process_after_confirm(ticket_granting_ticket, parameters = nil, user_agent = nil)
+    parameters ||= {}
+    @client_ticket_granting_ticket = ticket_granting_ticket
+    @service_url = parameters[:service]
+    @user_agent = user_agent
+    fetch_valid_ticket_granting_ticket
+    if @service_url && @ticket_granting_ticket
+      create_service_ticket
+      @service_ticket.ticket
+    end
+  end
+
   private
   def fetch_valid_ticket_granting_ticket
     @ticket_granting_ticket = find_valid_ticket_granting_ticket(@client_ticket_granting_ticket, @user_agent)

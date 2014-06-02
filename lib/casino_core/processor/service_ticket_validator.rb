@@ -21,6 +21,20 @@ class CASinoCore::Processor::ServiceTicketValidator < CASinoCore::Processor
     end
   end
 
+  def process_after_confirm(params = nil)
+    params ||= {}
+    if request_valid?(params)
+      ticket = CASino::ServiceTicket.where(ticket: params[:ticket]).first
+      validation_result = validate_ticket_for_service(ticket, params[:service], !!params[:renew])
+      if validation_result.success?
+        options = { ticket: ticket }
+        return build_service_response(true, options)
+      else
+        return build_service_response(false, error_code: validation_result.error_code, error_message: validation_result.error_message)
+      end
+    end
+  end
+
   protected
   def build_service_response(success, options = {})
     builder = CASinoCore::Builder::TicketValidationResponse.new(success, options)

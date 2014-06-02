@@ -34,6 +34,18 @@ class CASinoCore::Processor::LoginCredentialAcceptor < CASinoCore::Processor
     end
   end
 
+  def process_after_confirm(login_data, user_agent = nil)
+    @username = login_data["username"]
+    @user_agent = user_agent
+    validate_confirm_data
+    unless @authentication_result.nil?
+      generate_ticket_granting_ticket
+      return [@ticket_granting_ticket.ticket]
+    else
+      return nil
+    end
+  end
+
   private
   def authenticate_user
     authentication_result = validate_login_credentials(@params[:username], @params[:password])
