@@ -35,7 +35,6 @@ class CASinoCore::Processor::API::LoginCredentialAcceptor < CASinoCore::Processo
     @user_agent = user_agent
     validate_confirm_data
     unless @authentication_result.nil?
-      binding.pry
       generate_ticket_granting_ticket
       return [" "]
     else
