@@ -17,7 +17,6 @@ namespace :casino_core do
     end
 
     task :configuration => :environment do
-      CASinoCore.setup DATABASE_ENV
       ActiveRecord::Base.logger = CASinoCore::Settings.logger
     end
 
