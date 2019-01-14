@@ -1,6 +1,6 @@
 require 'factory_girl'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :proxy_granting_ticket, class: CASinoCore::Model::ProxyGrantingTicket do
     association :granter, factory: :service_ticket
     sequence :ticket do |n|

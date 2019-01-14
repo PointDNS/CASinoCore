@@ -15,7 +15,7 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorActivator do
     end
 
     context 'with an existing ticket-granting ticket' do
-      let(:ticket_granting_ticket) { FactoryGirl.create :ticket_granting_ticket }
+      let(:ticket_granting_ticket) { FactoryBot.create :ticket_granting_ticket }
       let(:user) { ticket_granting_ticket.user }
       let(:tgt) { ticket_granting_ticket.ticket }
       let(:user_agent) { ticket_granting_ticket.user_agent }
@@ -25,7 +25,7 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorActivator do
 
       context 'with an invalid authenticator' do
         context 'with an expired authenticator' do
-          let(:two_factor_authenticator) { FactoryGirl.create :two_factor_authenticator, :inactive, user: user }
+          let(:two_factor_authenticator) { FactoryBot.create :two_factor_authenticator, :inactive, user: user }
 
           before(:each) do
             two_factor_authenticator.created_at = 10.hours.ago
@@ -39,7 +39,7 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorActivator do
         end
 
         context 'with a authenticator of another user' do
-          let(:two_factor_authenticator) { FactoryGirl.create :two_factor_authenticator, :inactive }
+          let(:two_factor_authenticator) { FactoryBot.create :two_factor_authenticator, :inactive }
 
           before(:each) do
             two_factor_authenticator.created_at = 10.hours.ago
@@ -54,7 +54,7 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorActivator do
       end
 
       context 'with a valid authenticator' do
-        let(:two_factor_authenticator) { FactoryGirl.create :two_factor_authenticator, :inactive, user: user }
+        let(:two_factor_authenticator) { FactoryBot.create :two_factor_authenticator, :inactive, user: user }
 
         context 'with a valid OTP' do
           before(:each) do
@@ -73,7 +73,7 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorActivator do
           end
 
           context 'when another two-factor authenticator was active' do
-            let!(:other_two_factor_authenticator) { FactoryGirl.create :two_factor_authenticator, user: user }
+            let!(:other_two_factor_authenticator) { FactoryBot.create :two_factor_authenticator, user: user }
 
             it 'does activate the authenticator' do
               processor.process(params, cookies, user_agent)

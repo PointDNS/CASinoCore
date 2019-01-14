@@ -13,14 +13,14 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorDestroyer do
     end
 
     context 'with an existing ticket-granting ticket' do
-      let(:ticket_granting_ticket) { FactoryGirl.create :ticket_granting_ticket }
+      let(:ticket_granting_ticket) { FactoryBot.create :ticket_granting_ticket }
       let(:user) { ticket_granting_ticket.user }
       let(:tgt) { ticket_granting_ticket.ticket }
       let(:user_agent) { ticket_granting_ticket.user_agent }
       let(:params) { { id: two_factor_authenticator.id } }
 
       context 'with a valid two-factor authenticator' do
-        let!(:two_factor_authenticator) { FactoryGirl.create :two_factor_authenticator, user: user }
+        let!(:two_factor_authenticator) { FactoryBot.create :two_factor_authenticator, user: user }
 
         it 'calls the #two_factor_authenticator_destroyed method on the listener' do
           listener.should_receive(:two_factor_authenticator_destroyed).with(no_args)
@@ -35,7 +35,7 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorDestroyer do
         end
 
         it 'does not delete other two-factor authenticators' do
-          other = FactoryGirl.create :two_factor_authenticator
+          other = FactoryBot.create :two_factor_authenticator
           lambda do
             processor.process(params, cookies, user_agent)
           end.should change(CASinoCore::Model::TwoFactorAuthenticator, :count).by(-1)
@@ -43,7 +43,7 @@ describe CASinoCore::Processor::TwoFactorAuthenticatorDestroyer do
       end
 
       context 'with a two-factor authenticator of another user' do
-        let!(:two_factor_authenticator) { FactoryGirl.create :two_factor_authenticator }
+        let!(:two_factor_authenticator) { FactoryBot.create :two_factor_authenticator }
 
         it 'calls the #invalid_two_factor_authenticator method on the listener' do
           listener.should_receive(:invalid_two_factor_authenticator).with(no_args)
