@@ -66,7 +66,7 @@ module CASinoCore
         classname = name.camelize
         begin
           require gemname
-          CASinoCore::Authenticator.const_get(classname).new(options)
+          CASino.const_get("#{classname}Authenticator").new(options)
         rescue LoadError => error
           puts "Failed to load authenticator '#{name}'. Maybe you have to include \"gem '#{gemname}'\" in your Gemfile?"
           puts "  Error: #{error.message}"
