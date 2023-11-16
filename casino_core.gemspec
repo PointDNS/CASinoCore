@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = CASinoCore::VERSION
   s.authors     = ['Nils Caspar']
   s.email       = ['ncaspar@me.com']
-  s.homepage    = 'http://rbcas.org/'
+  s.homepage    = 'https://pointhq.com/'
   s.license     = 'MIT'
   s.summary     = 'A CAS server core library.'
   s.description = 'CASinoCore is a CAS server library. It can be used by other projects to build a fully functional CAS server.'
@@ -34,7 +34,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'yard', '~> 0.8'
   s.add_development_dependency 'coveralls'
 
-  s.add_runtime_dependency 'activerecord', '~> 3.2.9'
   s.add_runtime_dependency 'addressable', '~> 2.3'
   s.add_runtime_dependency 'terminal-table', '~> 1.4'
   s.add_runtime_dependency 'useragent', '~> 0.4'
