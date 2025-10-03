@@ -2,7 +2,6 @@ require 'casino_core/model'
 require 'casino_core/settings'
 
 class CASinoCore::Model::LoginTicket < ActiveRecord::Base
-  attr_accessible :ticket
   validates :ticket, uniqueness: true
 
   def self.cleanup
